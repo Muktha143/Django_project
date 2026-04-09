@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1 class="display-4">Welcome to Aadhaar Management System</h1>
+        <p class="lead">Manage and verify Aadhaar and PAN card details securely</p>
+        <hr class="my-4">
+        <p>This system helps you register, verify, and manage Aadhaar and PAN card information.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Register Now</a>
+        <a class="btn btn-success btn-lg" href="{% url 'search' %}" role="button">Search User</a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Quick Registration</h5>
+                <p class="card-text">Register new users with Aadhaar and PAN details.</p>
+                <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search Users</h5>
+                <p class="card-text">Search users by Aadhaar number or PAN card.</p>
+                <a href="{% url 'search' %}" class="btn btn-success">Search</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">View All Users</h5>
+                <p class="card-text">View complete list of registered users.</p>
+                <a href="{% url 'user_list' %}" class="btn btn-info">View All</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

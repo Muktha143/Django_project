@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-lg">
+            <div class="card-header bg-success text-white text-center">
+                <h3 class="mb-0">Government of India</h3>
+                <h4>Income Tax Department</h4>
+                <h5>PERMANENT ACCOUNT NUMBER (PAN) CARD</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        {% if user.image %}
+                            <img src="{{ user.image.url }}" alt="Profile" class="img-fluid rounded-circle mb-3" style="max-width: 120px; border: 2px solid #ddd;">
+                        {% endif %}
+                        <img src="https://www.incometaxindia.gov.in/PublishingImages/pan-card.png" alt="PAN Card" style="width: 100px;">
+                    </div>
+                    <div class="col-md-9">
+                        <h5 class="card-title">Card Details</h5>
+                        <hr>
+                        <table class="table table-borderless">
+                            <tr>
+                                <th width="30%">Name:</th>
+                                <td><strong>{{ user.full_name }}</strong></td>
+                            </tr>
+                            <tr>
+                                <th>PAN Number:</th>
+                                <td><strong class="text-success">{{ user.pan_number }}</strong></td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth:</th>
+                                <td>{{ user.dob }}</td>
+                            </tr>
+                            <tr>
+                                <th>Father's Name:</th>
+                                <td>{{ user.father_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status:</th>
+                                <td><span class="badge bg-success">Valid</span></td>
+                            </tr>
+                            <tr>
+                                <th>Linked Aadhaar:</th>
+                                <td>{{ user.aadhaar_number }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl={{ user.pan_number }}" alt="QR Code">
+                </div>
+                <div class="alert alert-info mt-3">
+                    <small>Note: This card is digitally signed and valid for all purposes.</small>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'user_list' %}" class="btn btn-secondary">Back to List</a>
+                <a href="{% url 'aadhaar_card' aadhaar=user.aadhaar_number %}" class="btn btn-primary">View Aadhaar Card</a>
+                <button onclick="window.print()" class="btn btn-success">Print PAN Card</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 class="mb-4">Search User</h2>
+        <div class="card">
+            <div class="card-body">
+                <form method="get" action="{% url 'search' %}">
+                    <div class="mb-3">
+                        <label for="aadhaar" class="form-label">Search by Aadhaar Number:</label>
+                        <input type="text" class="form-control" id="aadhaar" name="aadhaar_number" 
+                               placeholder="Enter 12-digit Aadhaar number" pattern="\d{12}" maxlength="12">
+                        <div class="form-text">Enter exactly 12 digits</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pan" class="form-label">Or Search by PAN Number:</label>
+                        <input type="text" class="form-control" id="pan" name="pan_number" 
+                               placeholder="Enter 10-digit PAN number" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10">
+                        <div class="form-text">Format: ABCDE1234F</div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a href="{% url 'user_list' %}" class="btn btn-info">View All Users</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if users %}
+<div class="row mt-5">
+    <div class="col-md-12">
+        <h3>Search Results</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Aadhaar Number</th>
+                        <th>PAN Number</th>
+                        <th>Mobile</th>
+                        <th>Gender</th>
+                        <th>State</th>
+                        <th>Pincode</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.full_name }}</td>
+                        <td>{{ user.aadhaar_number }}</td>
+                        <td>{{ user.pan_number }}</td>
+                        <td>{{ user.mobile_number }}</td>
+                        <td>{{ user.gender.name }}</td>
+                        <td>{{ user.state.name }}</td>
+                        <td>{{ user.pincode.code }}</td>
+                        <td>
+                            <a href="{% url 'aadhaar_card' aadhaar=user.aadhaar_number %}" class="btn btn-sm btn-primary">View Aadhaar</a>
+                            <a href="{% url 'pan_card' pan=user.pan_number %}" class="btn btn-sm btn-success">View PAN</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% elif request.GET.aadhaar or request.GET.pan %}
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="alert alert-info text-center">
+            No user found with the given details.
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
